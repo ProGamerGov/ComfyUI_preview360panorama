@@ -31,8 +31,8 @@ class PanoramaViewerNode:
         Returns:
             dict: Dictionary containing required input parameters:
                 - images (torch.Tensor): Input tensor containing the panoramic image.
-                - max_width (int): Maximum width for resizing. Default: 4096.
-                  Set to -1 for no resizing. Supports 2:1 and 1:1 aspect ratios.
+                - max_width (int): Maximum dimension for resizing. Default: 4096
+                  Set to -1 for no resizing.
         """
         return {
             "required": {
@@ -43,8 +43,7 @@ class PanoramaViewerNode:
                         "default": 4096,
                         "tooltip": "The max width to use. Images larger than the"
                         + " specified value will be resized. Larger sizes may run"
-                        + " slower. Set to -1 for no resizing. Currently only 2:1"
-                        + " and 1:1 aspect ratios are supported for resizing.",
+                        + " slower. Set to -1 for no resizing.",
                     },
                 ),
             }
@@ -103,12 +102,13 @@ class PanoramaViewerNode:
         pil_image = Image.fromarray(image_np)
 
         # Optionally resize image
-        if max_width > 0 and pil_image.size[0] > max_width:
-            if pil_image.size[0] == pil_image.size[1]:
-                new_size = (max_width, max_width)
-            else:
-                new_size = (max_width, max_width // 2)
-            pil_image = pil_image.resize(new_size, resample=Image.Resampling.LANCZOS)
+        if max_width > 0 and (
+            pil_image.size[0] > max_width or pil_image.size[1] > max_width
+        ):
+            new_size = tuple(
+                [int(max_width * x / max(pil_image.size)) for x in pil_image.size]
+            )
+            pil_image = pil_image.resize(new_size, resample=Image.Resampling.LANCZOS)  # type: ignore[arg-type]
 
         # Save to BytesIO
         buffered = BytesIO()
