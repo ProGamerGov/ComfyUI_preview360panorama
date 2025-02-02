@@ -1,0 +1,18 @@
+abstract: "Preview 360 Panoramas inside ComfyUI"
+authors:
+  - family-names: Egan
+    given-names: Ben
+cff-version: 1.2.0
+date-released: "2025-02-01"
+keywords:
+  - equirectangular
+  - panorama
+  - viewer
+  - "360 degrees"
+  - "360 degree image"
+  - 360
+  - research
+license: MIT
+message: "If you use this software, please cite it using these metadata."
+repository-code: "https://github.com/ProGamerGov/ComfyUI_preview360panorama"
+title: "Preview 360 Panorama for ComfyUI"
