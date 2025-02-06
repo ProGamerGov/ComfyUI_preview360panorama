@@ -106,3 +106,7 @@ If you use this library in your research or project, please refer to the include
 ```
 Egan, B. (2025). Preview 360 Panorama [Computer software]. GitHub. https://github.com/ProGamerGov/ComfyUI_preview360panorama
 ```
+
+## 🌐 Related
+
+For editing 360 images inside ComfyUI, see the [ComfyUI_pytorch360convert](https://github.com/ProGamerGov/ComfyUI_pytorch360convert) custom nodes.
