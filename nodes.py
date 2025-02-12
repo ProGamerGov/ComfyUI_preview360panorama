@@ -31,7 +31,7 @@ class PanoramaViewerNode:
         Returns:
             dict: Dictionary containing required input parameters:
                 - images (torch.Tensor): Input tensor containing the panoramic image.
-                - max_width (int): Maximum dimension for resizing. Default: 4096
+                - max_width (int): Maximum dimension for resizing. Default: -1
                   Set to -1 for no resizing.
         """
         return {
@@ -40,7 +40,7 @@ class PanoramaViewerNode:
                 "max_width": (
                     "INT",
                     {
-                        "default": 4096,
+                        "default": -1,
                         "tooltip": "The max width to use. Images larger than the"
                         + " specified value will be resized. Larger sizes may run"
                         + " slower. Set to -1 for no resizing.",
