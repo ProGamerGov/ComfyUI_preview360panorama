@@ -118,11 +118,12 @@ class PanoramaViewerNode:
         img_str = base64.b64encode(buffered.getvalue()).decode()
         return {"ui": {"pano_image": f"data:image/png;base64,{img_str}"}}
 
+
 class PanoramaVideoViewerNode:
     """A ComfyUI node that provides an interactive 360-degree panorama viewer for
     equirectangular video content.
 
-    This node takes a video file path or a sequence of image frames and displays it in 
+    This node takes a video file path or a sequence of image frames and displays it in
     a Three.js-based panoramic video viewer that allows users to:
     - Pan around the 360-degree view using mouse drag
     - Zoom in/out using the mouse wheel
@@ -151,14 +152,14 @@ class PanoramaVideoViewerNode:
             "required": {
                 "video_frames": ("IMAGE",),
                 "fps": (
-                    "INT", 
+                    "INT",
                     {
                         "default": 30,
                         "min": 1,
                         "max": 120,
                         "step": 1,
-                        "tooltip": "Frames per second for video playback"
-                    }
+                        "tooltip": "Frames per second for video playback",
+                    },
                 ),
                 "max_width": (
                     "INT",
@@ -211,7 +212,7 @@ class PanoramaVideoViewerNode:
 
         # Create a list to store processed frames
         processed_frames = []
-        
+
         # Process each frame
         for frame in video_frames:
             # Convert to numpy and proper format
@@ -235,43 +236,46 @@ class PanoramaVideoViewerNode:
                 new_size = tuple(
                     [int(max_width * x / max(pil_frame.size)) for x in pil_frame.size]
                 )
-                pil_frame = pil_frame.resize(new_size, resample=Image.Resampling.LANCZOS)
+                pil_frame = pil_frame.resize(
+                    new_size, resample=Image.Resampling.LANCZOS
+                )
 
             # Add to processed frames
             processed_frames.append(pil_frame)
-        
+
         # Check if we have any frames
         if not processed_frames:
             return {"ui": {"error": "No frames found in input"}}
-        
+
         # Create a list to store base64 strings of each frame
         frame_data = []
-        
+
         # Convert each frame to base64
         for frame in processed_frames:
             buffered = BytesIO()
             frame.save(buffered, format="PNG")
             img_str = base64.b64encode(buffered.getvalue()).decode()
             frame_data.append(f"data:image/png;base64,{img_str}")
-        
+
         # Return the frame data, count, and fps
         return {
             "ui": {
                 "pano_video_preview": frame_data[0],  # First frame as preview
-                "pano_video_frames": frame_data,      # All frames as list of strings
+                "pano_video_frames": frame_data,  # All frames as list of strings
                 "frame_count": str(len(processed_frames)),
                 "fps": str(fps),
-                "video_type": "360_equirectangular"
+                "video_type": "360_equirectangular",
             }
         }
+
 
 # Update mappings to include the new node
 NODE_CLASS_MAPPINGS = {
     "PanoramaViewerNode": PanoramaViewerNode,
-    "PanoramaVideoViewerNode": PanoramaVideoViewerNode
+    "PanoramaVideoViewerNode": PanoramaVideoViewerNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "PanoramaViewerNode": "Preview 360 Panorama",
-    "PanoramaVideoViewerNode": "Preview 360 Video Panorama"
+    "PanoramaVideoViewerNode": "Preview 360 Video Panorama",
 }
