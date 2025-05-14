@@ -110,3 +110,5 @@ Egan, B. (2025). Preview 360 Panorama [Computer software]. GitHub. https://githu
 ## 🌐 Related
 
 For editing 360 images inside ComfyUI, see the [ComfyUI_pytorch360convert](https://github.com/ProGamerGov/ComfyUI_pytorch360convert) custom nodes.
+
+For a web browser based 360 image viewer and video player, see the [360° Image & Video Viewer](https://github.com/ProGamerGov/html-360-viewer) project.
